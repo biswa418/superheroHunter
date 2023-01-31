@@ -1,0 +1,124 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html {
+    position: relative;
+}
+
+body {
+    font-family: RobotoCondensed, Trebuchet MS, Helvetica, Arial, sans-serif;
+    background: linear-gradient(80deg, #131313, #000);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    padding: 2px;
+    color: white;
+    background-color: red;
+}
+
+.nav-link {
+    margin-left: 40%;
+}
+
+.form-control:focus {
+    border: none;
+}
+
+.navbar-toggler {
+    position: absolute;
+    top: -50px;
+    padding-top: 0;
+    margin: 0;
+}
+
+h2 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h2::after,
+h2::before {
+    background-color: #c6a972;
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    transform: rotate(-45deg) skewX(45deg);
+    width: 20px;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 5vh;
+}
+
+
+h2::before {
+    margin-left: 4%;
+}
+
+
+.images {
+    margin-top: 2%;
+    padding: 3%;
+    overflow: hidden;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 30px;
+    justify-content: center;
+    row-gap: 30px;
+}
+
+.cards {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(31, 31, 31);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2px;
+}
+
+.cards:hover .thumbnail {
+    transform: translateY(-10px);
+}
+
+.title-holder {
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 4%;
+    width: 100%;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.title-holder>h3 {
+    font-size: 1rem;
+}
+
+.thumbnail {
+    height: 80%;
+    /*  240px; */
+    width: 100%;
+}
+
+#card-holder {
+    margin-top: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+i {
+    cursor: pointer;
+}
