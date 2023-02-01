@@ -14,50 +14,50 @@ var md5 = function (d) { var r = M(V(Y(X(d), 8 * d.length))); return r.toLowerCa
 var holder = document.getElementById('card-holder');
 var container = document.querySelector('.container');
 var linkFav = document.getElementById('link-fav');
-var hearts = null;
+var cards = null; //to set the event when clicked on any cards -- Single page
+var hearts = null; //hearts to remove from favs
 
 //calculate checksum
 var checksum = "2c485f75671c667ae8f9400c15bad960" //md5(df + privateKey + publicKey).toString();
 
 //gets the image and details using ids
-var getBasic = function (id) {
-    try {
+// var getBasic = function (id) {
+//     try {
 
-        // let result = ;
-
-
-
-        // no need to fetch the results again because we stored it in local earlier so no CORS failure anymore
-        // var result = fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?ts=${df}&apikey=${publicKey}&hash=${checksum}`,
-        //     {
-        //         method: "GET",
-        //         mode: 'no-cors',
-        //         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-        //     })
-        //     .then(function (response) {
-        //         console.log(response);
-        //         return response.json();
-        //     })
-        //     .then(function (data) {
-        //         return data.data.results;
-        //     })
-        //     .then(function (value) {
-        //         return value;
-        //     })
-
-        // return result;
+//         // let result = ;
 
 
-    } catch (e) {
-        console.log(e);
-    }
-}
+
+//         // no need to fetch the results again because we stored it in local earlier so no CORS failure anymore
+//         // var result = fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?ts=${df}&apikey=${publicKey}&hash=${checksum}`,
+//         //     {
+//         //         method: "GET",
+//         //         mode: 'no-cors',
+//         //         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+//         //     })
+//         //     .then(function (response) {
+//         //         console.log(response);
+//         //         return response.json();
+//         //     })
+//         //     .then(function (data) {
+//         //         return data.data.results;
+//         //     })
+//         //     .then(function (value) {
+//         //         return value;
+//         //     })
+
+//         // return result;
+
+
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }
 
 //reload the content
 let getFav = function (finalRes) {
     holder.innerHTML = "";
-
-    console.log(finalRes);
+    // console.log(finalRes);
 
     for (let i of finalRes) {
 
@@ -67,16 +67,24 @@ let getFav = function (finalRes) {
         var id = i.id;
 
         holder.innerHTML = holder.innerHTML + `<div class="cards grid-item">
-            <img class="thumbnail" src="${srcPath}" />
-            <div class="title-holder d-flex justify-space-around">
-                <h3 class="hd_hero">${name}</h3>
-                <i id="${id}" class="fa-solid fa-heart" style="color: red;"></i>
-            </div>
-            </div>`
+        <a class="single" href="./single_page.html" data-json="${i}"></a>
+        <img class="thumbnail" src="${srcPath}" />
+        <div class="title-holder d-flex justify-space-around">
+            <h3 class="hd_hero">${name}</h3>
+        
+            <i id="${id}" class="fa-solid fa-heart"></i>
+        </div>
+        </div>`
     }
 
     hearts = document.querySelectorAll('i');
-    listenToFav();
+
+
+    for (let k of hearts) {
+        k.style.color = "red";
+    }
+
+    listenToFav(finalRes);
 }
 
 
@@ -87,9 +95,21 @@ var LoadFavorite = function () {
         list2 = localStorage.getItem("favR").split("|");
 
         for (let j = 0; j < list.length; j++) {
+            try {
 
-            let temp = JSON.parse(list2[j]);
-            finalRes.push(temp[Number(list[j])]);
+                if (list[j] != "") {
+
+                    if (list2[j][0] == ',') {
+                        list2[j].slice(1);
+                    }
+
+                    let temp = JSON.parse(list2[j]);
+                    finalRes.push(temp[Number(list[j])]);
+                }
+
+            } catch (e) {
+                console.log("error on " + " " + j + " " + e);
+            }
         }
 
         getFav(finalRes);
@@ -104,56 +124,98 @@ var LoadFavorite = function () {
     }
 }
 
-var listenToFav = function () {
+var listenToFav = function (favRes) {
     for (let j of hearts) {
         j.addEventListener('click', function () {
-            // console.log(j.attributes.id.value);
-            if (j.style.color != "red") {
-                j.style.color = "red";
 
-                //check if data already exists or not
-                if (localStorage.getItem("fav") != null) {
-                    list = localStorage.getItem("fav").split(",");
-                }
+            // if (j.style.color != "red") {
 
-                list.push(j.attributes.id.value);
-                list2 = localStorage.getItem("favR");
+            //     j.style.display = "none";
+            //     j.style.color = "red";
+            //     // list = [];
+            //     // list2 = localStorage.getItem("favR");
 
-                if (list2 != null || list2 != undefined) {
-                    list2 += "|" + `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+            //     // //check if data already exists or not
+            //     // if (localStorage.getItem("fav") != null) {
+            //     //     if (localStorage.getItem("fav")[0] == ",") {
+            //     //         list = localStorage.getItem("fav").slice(1).split(",");
+            //     //         list2 = localStorage.getItem("favR").slice(1);
+            //     //     } else {
+            //     //         list = localStorage.getItem("fav").split(",");
+            //     //     }
+            //     // } else {
+            //     //     return;
+            //     // }
+
+            //     // list.push(j.attributes.id.value);
+
+            //     // if (list2 != null && list2 != undefined) {
+            //     //     list2 += "|" + `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+            //     // } else {
+            //     //     list2 = `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+            //     // }
+
+            //     // localStorage.setItem("fav", list);
+            //     // localStorage.setItem("favR", list2);
+
+            // } else {
+
+            //reset the color
+            j.style.color = "var(--bs-body-color)";
+            j.style.visibility = "hidden";
+
+            list = [];
+            list2 = localStorage.getItem("favR");
+
+            //get the index which the value exist
+            if (localStorage.getItem("fav") != null) {
+                if (localStorage.getItem("fav")[0] == ",") {
+                    list = localStorage.getItem("fav").slice(1).split(",");
+                    list2 = localStorage.getItem("favR").slice(1).split("|");
                 } else {
-                    list2 = `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+                    list = localStorage.getItem("fav").split(",");
+                    list2 = localStorage.getItem("favR").split("|");
                 }
-
-                localStorage.setItem("fav", list);
-                localStorage.setItem("favR", list2);
-
-            } else {
-                //get the index which the value exist
-                let temp = localStorage.getItem("favR").split("|");
-                const index = list.indexOf(j.attributes.id.value);
-
-                //if index exist then splice and delete that one
-                if (index > -1) {
-                    temp.splice(index, 1);
-                    list.splice(index, 1);
-                }
-
-                //userStorage remove the current id
-                localStorage.setItem("fav", list);
-                localStorage.setItem("favR", temp);
-
-                //reset the color
-                j.style.color = "var(--bs-body-color)";
             }
 
-            // LoadFavorite();
+            let index = list.indexOf(String(j.attributes.id.value));
+
+            //if index exist then splice and delete that one
+            if (index > -1) {
+                console.log(index);
+                list.splice(index, 1);
+                list2.splice(index, 1);
+
+                console.log(list2);
+
+                //userStorage remove the current id
+                localStorage.removeItem("fav");
+                localStorage.setItem("fav", list);
+
+                let s = "";
+                let k = 0;
+
+                for (; k < list2.length - 1; k++) {
+                    s += list2[k] + '|';
+                }
+
+                s += list2[k];
+
+                //clear and store
+                localStorage.removeItem("favR");
+                localStorage.setItem("favR", s);
+
+            }
+
+            if (list == "" || list == []) {
+                localStorage.removeItem('fav');
+                localStorage.removeItem('favR');
+                return;
+            }
+
+            return;
         });
     }
-
-
 }
 
-
-LoadFavorite();
-
+window.addEventListener('load', LoadFavorite);
