@@ -13,6 +13,24 @@ body {
     background: linear-gradient(80deg, #131313, #000);
 }
 
+.single {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    /* color: transparent; */
+}
+
+/* .logo {
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 50%;
+    z-index: 1;
+} */
+
 .navbar-brand {
     font-weight: 700;
     padding: 2px;
@@ -117,8 +135,10 @@ h2::before {
     margin-top: 0;
     padding-left: 10%;
     padding-right: 10%;
+    position: relative;
 }
 
 i {
     cursor: pointer;
+    z-index: 2;
 }
