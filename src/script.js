@@ -20,6 +20,7 @@ var flag = false; //flag for favorites
 var holder = document.getElementById('card-holder');
 var container = document.querySelector('.container');
 var linkFav = document.getElementById('link-fav');
+var cards = null; //to set the event when clicked on any cards -- Single page
 
 
 var finalRes = null; //cache for loaded content
@@ -33,11 +34,11 @@ let getChar = function (finalRes) {
         var name = i.name;
         var id = i.id;
 
-
         favRes[id] = i;
         // console.log(favRes);
 
         holder.innerHTML = holder.innerHTML + `<div class="cards grid-item">
+        <a class="single" href="./src/single_page.html"></a>
         <img class="thumbnail" src="${srcPath}" />
         <div class="title-holder d-flex justify-space-around">
             <h3 class="hd_hero">${name}</h3>
@@ -49,6 +50,8 @@ let getChar = function (finalRes) {
     // console.log(favRes);
 
     hearts = document.querySelectorAll('i');
+    cards = document.querySelectorAll('.single');
+    listenToCards(favRes);
     listenToFav(favRes);
 }
 
@@ -99,13 +102,47 @@ var listenToFav = function (favRes) {
             if (j.style.color != "red") {
                 j.style.color = "red";
 
-                //check if data already exists or not
+                // {
+                // //check if data already exists or not
+                // // if (localStorage.getItem("fav") != null) {
+                // //     list = localStorage.getItem("fav").split(",");
+                // //     list2 = localStorage.getItem("favR").split("|");
+                // // } else {
+                // //     list = [];
+                // //     list2 = [];
+                // // }
+
+                // // list.push(j.attributes.id.value);
+
+                // // if (list2 != null || list2 != undefined) {
+                // //     list2 += '|' + `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+                // // } else {
+                // //     list2 = `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
+                // // }
+
+                // // let s = "";
+
+                // // for (let k of list2) {
+                // //     s += '|' + k;
+                // // }
+
+                // // localStorage.setItem("fav", list);
+                // // localStorage.setItem("favR", list2);
+                // }
+
+                list = [];
+                list2 = localStorage.getItem("favR");
+
                 if (localStorage.getItem("fav") != null) {
-                    list = localStorage.getItem("fav").split(",");
+                    if (localStorage.getItem("fav")[0] == ",") {
+                        list = localStorage.getItem("fav").slice(1).split(",");
+                        list2 = localStorage.getItem("favR").slice(1);
+                    } else {
+                        list = localStorage.getItem("fav").split(",");
+                    }
                 }
 
                 list.push(j.attributes.id.value);
-                list2 = localStorage.getItem("favR");
 
                 if (list2 != null && list2 != undefined) {
                     list2 += "|" + `{"${j.attributes.id.value}":${JSON.stringify(favRes[j.attributes.id.value])}}`;
@@ -136,4 +173,8 @@ var listenToFav = function (favRes) {
             }
         });
     }
+}
+
+var listenToCards = function (favRes) {
+
 }
