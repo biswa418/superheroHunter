@@ -64,6 +64,8 @@ var reloadDetails = function () {
 //get the thumbnails from the url api
 async function getThumbdetails(url) {
     try {
+        // as github pages is forced https and the url is in http
+        url = "https:/" + url.slice(6);
         return fetch(`${url}?ts=${df}&apikey=${publicKey}&hash=${checksum}`)
             .then(function (response) {
                 return response.json();
