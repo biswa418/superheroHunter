@@ -25,9 +25,6 @@ var checksum = "2c485f75671c667ae8f9400c15bad960" //md5(df + privateKey + public
 //     try {
 
 //         // let result = ;
-
-
-
 //         // no need to fetch the results again because we stored it in local earlier so no CORS failure anymore
 //         // var result = fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?ts=${df}&apikey=${publicKey}&hash=${checksum}`,
 //         //     {
@@ -45,19 +42,16 @@ var checksum = "2c485f75671c667ae8f9400c15bad960" //md5(df + privateKey + public
 //         //     .then(function (value) {
 //         //         return value;
 //         //     })
-
 //         // return result;
-
-
 //     } catch (e) {
 //         console.log(e);
 //     }
 // }
 
+
 //reload the content
 let getFav = function (finalRes) {
     holder.innerHTML = "";
-    // console.log(finalRes);
 
     for (let i of finalRes) {
 
@@ -67,7 +61,7 @@ let getFav = function (finalRes) {
         var id = i.id;
 
         holder.innerHTML = holder.innerHTML + `<div class="cards grid-item">
-        <a class="single" href="./single_page.html" data-json="${i}"></a>
+        <a id="${id}" class="single" href="./single_page.html" data-json="${i}"></a>
         <img class="thumbnail" src="${srcPath}" />
         <div class="title-holder d-flex justify-space-around">
             <h3 class="hd_hero">${name}</h3>
@@ -78,12 +72,13 @@ let getFav = function (finalRes) {
     }
 
     hearts = document.querySelectorAll('i');
-
+    cards = document.querySelectorAll('.single');
 
     for (let k of hearts) {
         k.style.color = "red";
     }
 
+    listenToCards(finalRes);
     listenToFav(finalRes);
 }
 
@@ -214,6 +209,28 @@ var listenToFav = function (favRes) {
             }
 
             return;
+        });
+    }
+}
+
+
+var listenToCards = function (favRes) {
+    for (let l of cards) {
+        l.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            localStorage.removeItem('oneClicked');
+            localStorage.removeItem('clicked');
+
+            localStorage.setItem('oneClicked', l.attributes.id.value);
+
+            for (let k of favRes) {
+                if (Number(k.id) == Number(l.attributes.id.value)) {
+                    localStorage.setItem('clicked', JSON.stringify(k));
+                }
+            }
+
+            window.location.href = "./single_page.html";
         });
     }
 }
