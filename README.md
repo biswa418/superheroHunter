@@ -17,4 +17,7 @@ Some glimpses of the project are-
   <source srcset="./images/Screenshot 1.png">
 </picture>!
 
+![alt text](https://github.com/biswa418/superheroHunter/blob/main/images/Screenshot 1.jpg?raw=true)
+
+
 [Screenshot 3](https://user-images.githubusercontent.com/88776869/216670237-a7ec91e1-2795-4c1f-bd68-eee8983ef76e.png)
