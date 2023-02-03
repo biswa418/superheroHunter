@@ -6,22 +6,25 @@
 
 html {
     position: relative;
+    min-width: 300px;
 }
 
+/* setting up the font and background */
 body {
     font-family: RobotoCondensed, Trebuchet MS, Helvetica, Arial, sans-serif;
     background: linear-gradient(80deg, #131313, #000);
 }
 
+/* link for each cards */
 .single {
     text-decoration: none;
     height: 100%;
     width: 100%;
     z-index: 1;
     position: absolute;
-    /* color: transparent; */
 }
 
+/* logo image on top */
 /* .logo {
     width: 100%;
     position: fixed;
@@ -31,6 +34,7 @@ body {
     z-index: 1;
 } */
 
+/* navigation bar */
 .navbar-brand {
     font-weight: 700;
     padding: 2px;
@@ -53,6 +57,7 @@ body {
     margin: 0;
 }
 
+/* headings throughout the page */
 h2 {
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -88,6 +93,7 @@ h2::before {
     overflow: hidden;
 }
 
+/* grids container after loading the page */
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -138,7 +144,76 @@ h2::before {
     position: relative;
 }
 
+#card-holder2 {
+    margin-top: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+    position: relative;
+}
+
 i {
     cursor: pointer;
     z-index: 2;
+}
+
+/* single page styling */
+#card {
+    /* position: absolute; */
+    left: 0px;
+}
+
+#top-card {
+    width: 80%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 20px auto 0;
+    border-radius: 50px;
+    background: linear-gradient(65deg, #3f404b, #0d0d0d);
+}
+
+#singleThumb {
+    width: 450px;
+    height: 450px;
+    border-radius: inherit;
+}
+
+#comics {
+    margin-top: 40px;
+}
+
+/* .w-100 {
+    width: 400px;
+    height: 400px;
+} */
+
+#holder {
+    border: 2px solid blue;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -30px;
+    position: relative;
+}
+
+.carousel {
+    border: 2px solid red;
+
+    width: 80%;
+    height: 100%;
+}
+
+
+/* responsive after 850px */
+@media only screen and (max-width: 850px) {
+    #top-card {
+        flex-direction: column;
+    }
+
+    #singleThumb {
+        width: 100%;
+        /* min-width: 100px; */
+    }
 }
